@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Resume Analyzer</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>AI Resume Analyzer</h1>
+
+        <div class="card">
+
+            <label for="resumeFile">Select Resume (PDF)</label>
+
+            <input type="file"
+                   id="resumeFile"
+                   accept=".pdf">
+
+            <label for="jobDescription">Job Description</label>
+
+            <textarea
+                    id="jobDescription"
+                    rows="10"
+                    placeholder="Paste the job description here..."></textarea>
+
+            <button id="analyzeBtn">
+                Analyze Resume
+            </button>
+
+        </div>
+
+        <div id="result" class="card">
+
+            <h2>Analysis Result</h2>
+
+            <h3>ATS Score</h3>
+            <p id="atsScore">--</p>
+
+            <h3>Matched Skills</h3>
+            <ul id="matchedSkills"></ul>
+
+            <h3>Missing Skills</h3>
+            <ul id="missingSkills"></ul>
+
+            <h3>Strengths</h3>
+            <p id="strengths"></p>
+
+            <h3>Weaknesses</h3>
+            <p id="weaknesses"></p>
+
+            <h3>Suggestions</h3>
+            <p id="suggestions"></p>
+
+        </div>
+
+    </div>
+
+    <!-- Axios Library -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <!-- Your JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
