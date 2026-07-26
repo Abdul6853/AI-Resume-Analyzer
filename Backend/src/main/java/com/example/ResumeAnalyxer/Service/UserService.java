@@ -7,6 +7,7 @@ import com.example.ResumeAnalyxer.Model.User;
 import com.example.ResumeAnalyxer.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,6 +19,8 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public String addUser(User user) {
         user.setCreatedDate(LocalDateTime.now());
@@ -51,7 +54,7 @@ public class UserService {
         User user= new User();
         user.setName(registerRequest.getName());
         user.setEmail(registerRequest.getEmail());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setCreatedDate(LocalDateTime.now());
         //validation
         Optional<User> existingUser= userRepo.findByEmail(registerRequest.getEmail());
@@ -64,14 +67,14 @@ public class UserService {
     public LoginResponse login(LoginRequest loginRequest) {
         Optional<User> user1 = userRepo.findByEmail(loginRequest.getEmail());
         if(user1.isEmpty()){
-            throw new RuntimeException("invalid Email");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"invalid Email");
         }
         User existingUser = user1.get();
         existingUser.getName();
         existingUser.getEmail();
         existingUser.getPassword();
-        if(!existingUser.getPassword().equals(loginRequest.getPassword())){
-            throw new RuntimeException("Invalid Password");
+        if(!passwordEncoder.matches(loginRequest.getPassword(),existingUser.getPassword())){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Invalid Password");
         }
         LoginResponse loginResponse= new LoginResponse();
         loginResponse.setUserId(existingUser.getUserID());

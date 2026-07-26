@@ -40,14 +40,13 @@ async function login() {
     }
     catch (error) {
 
-        message.style.color = "red";
+    console.log(error.response.data);
 
-        if (error.response) {
-            message.innerText = error.response.data.message;
-        } else {
-            message.innerText = "Unable to connect to server.";
-        }
+    alert(JSON.stringify(error.response.data));
 
+    message.style.color = "red";
+
+    message.innerText = JSON.stringify(error.response.data);
     }
 
 }

@@ -3,9 +3,19 @@ const user = JSON.parse(localStorage.getItem("user"));
 if (!user) {
     window.location.href = "login.html";
 }
+// Logout 
+const logoutBtn = document.getElementById("logoutBtn");
 
+logoutBtn.addEventListener("click", logout);
 
+function logout() {
 
+    localStorage.removeItem("user");
+
+    alert("Logged out successfully!");
+
+    window.location.href = "login.html";
+}
 
 const analyzeBtn = document.getElementById("analyzeBtn");
 
@@ -19,9 +29,6 @@ async function analyzeResume() {
         alert("Please choose a PDF.");
         return;
     }
-    const user = JSON.parse(localStorage.getItem("user"));
-
-const userId = user.userID;
 
     const formData = new FormData();
 
