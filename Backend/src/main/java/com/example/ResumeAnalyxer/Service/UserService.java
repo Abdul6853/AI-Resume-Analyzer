@@ -5,6 +5,7 @@ import com.example.ResumeAnalyxer.DTOs.LoginResponse;
 import com.example.ResumeAnalyxer.DTOs.RegisterRequest;
 import com.example.ResumeAnalyxer.Model.User;
 import com.example.ResumeAnalyxer.Repo.UserRepo;
+import com.example.ResumeAnalyxer.jwt.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +22,8 @@ public class UserService {
     UserRepo userRepo;
     @Autowired
     private PasswordEncoder passwordEncoder;
+@Autowired
+    private JwtService jwtService;
 
     public String addUser(User user) {
         user.setCreatedDate(LocalDateTime.now());
@@ -76,11 +79,13 @@ public class UserService {
         if(!passwordEncoder.matches(loginRequest.getPassword(),existingUser.getPassword())){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Invalid Password");
         }
+        String token = jwtService.generateToken(existingUser.getEmail());
         LoginResponse loginResponse= new LoginResponse();
         loginResponse.setUserId(existingUser.getUserID());
         loginResponse.setEmail(existingUser.getEmail());
         loginResponse.setName(existingUser.getName());
         loginResponse.setMessage("Login Sucessfull");
+        loginResponse.setToken(token);
         return loginResponse;
     }
 }

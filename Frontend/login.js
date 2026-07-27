@@ -24,10 +24,17 @@ async function login() {
             loginRequest
         );
 
-        // Save logged-in user
+        // Save JWT
+        localStorage.setItem("token", response.data.token); // or response.data.token if you rename it
+
+        // Save only user details
         localStorage.setItem(
-            "user",
-            JSON.stringify(response.data)
+        "user",
+        JSON.stringify({
+        userId: response.data.userId,
+        name: response.data.name,
+        email: response.data.email
+        })
         );
 
         message.style.color = "green";

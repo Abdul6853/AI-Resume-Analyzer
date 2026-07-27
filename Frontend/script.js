@@ -3,7 +3,8 @@ const user = JSON.parse(localStorage.getItem("user"));
 if (!user) {
     window.location.href = "login.html";
 }
-// Logout 
+
+// Logout
 const logoutBtn = document.getElementById("logoutBtn");
 
 logoutBtn.addEventListener("click", logout);
@@ -11,6 +12,7 @@ logoutBtn.addEventListener("click", logout);
 function logout() {
 
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
 
     alert("Logged out successfully!");
 
@@ -30,27 +32,31 @@ async function analyzeResume() {
         return;
     }
 
-    const formData = new FormData();
+    const token = localStorage.getItem("token");
 
+    const formData = new FormData();
     formData.append("file", file);
 
     try {
 
+        // Upload Resume
         const response = await axios.post(
-            `http://localhost:8080/resume/user/${userId}/upload`,
+            "http://localhost:8080/resume/user/" + user.userId + "/upload",
             formData,
             {
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    Authorization: `Bearer ${token}`
                 }
             }
         );
 
         console.log(response.data);
+
         const resumeId = response.data.resumeId;
 
         console.log("Resume ID:", resumeId);
 
+        // Create Job Description
         const jobDescription = {
             companyName: "Unknown",
             jobTitle: "Java Developer",
@@ -59,46 +65,57 @@ async function analyzeResume() {
 
         const jdResponse = await axios.post(
             "http://localhost:8080/jd/add",
-            jobDescription
+            jobDescription,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
         );
 
         const jdId = jdResponse.data.jdId;
 
         console.log("Job Description ID:", jdId);
 
+        // Analyze Resume
         const analysisResponse = await axios.post(
-            `http://localhost:8080/analysis/${resumeId}/${jdId}`);
+            `http://localhost:8080/analysis/${resumeId}/${jdId}`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
 
         const analysis = analysisResponse.data;
 
-        document.getElementById("atsScore").innerText = analysis.atsScore;
         console.log(analysis);
 
+        document.getElementById("atsScore").innerText = analysis.atsScore;
         document.getElementById("matchedSkills").innerText =
-        analysis.matchedSkills.join(", ");
-
+            analysis.matchedSkills.join(", ");
         document.getElementById("missingSkills").innerText =
-        analysis.missingSkills.join(", ");
-
+            analysis.missingSkills.join(", ");
         document.getElementById("strengths").innerText =
-        analysis.strengths;
-
+            analysis.strengths;
         document.getElementById("weaknesses").innerText =
-        analysis.weaknesses;
-
+            analysis.weaknesses;
         document.getElementById("suggestions").innerText =
-        analysis.suggestions;
+            analysis.suggestions;
 
-        alert("Analysis Completed!");
         alert("Resume Uploaded Successfully!");
+        alert("Analysis Completed!");
 
-    }
-    catch(error){
+    } catch (error) {
 
         console.error(error);
 
-        alert("Upload Failed!");
-
+        if (error.response) {
+            console.log(error.response.data);
+            alert(JSON.stringify(error.response.data));
+        } else {
+            alert("Upload Failed!");
+        }
     }
-
 }

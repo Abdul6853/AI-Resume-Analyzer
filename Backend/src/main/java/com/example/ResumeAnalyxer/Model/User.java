@@ -23,6 +23,7 @@ public class User {
     private String email;
     private LocalDateTime createdDate;
     private String password;
+
     @OneToMany(mappedBy ="user" )
     @JsonManagedReference
     private List<Resume > resumes;
