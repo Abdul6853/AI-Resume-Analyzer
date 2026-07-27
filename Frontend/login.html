@@ -6,11 +6,12 @@
     <title>Login | AI Resume Analyzer</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="auth-page">
 
 <div class="container">
 
     <h1>AI Resume Analyzer</h1>
+    <p class="subtitle">Sign in to continue optimizing your resume.</p>
     <h2>Login</h2>
 
     <input
@@ -23,13 +24,15 @@
         id="password"
         placeholder="Enter Password">
 
+    <p class="access-note">Tip: To verify your password, use your device or browser's secure reveal feature. Avoid revealing passwords on shared/public devices.</p>
+
     <button onclick="login()">
         Login
     </button>
 
     <p id="message"></p>
 
-    <p>
+    <p class="link-area">
         Don't have an account?
         <a href="register.html">Register</a>
     </p>
@@ -38,6 +41,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="login.js"></script>
+<!-- password peek removed -->
 
 </body>
 </html>

@@ -1,3 +1,5 @@
+// password peek removed
+
 const registerBtn = document.getElementById("registerBtn");
 
 registerBtn.addEventListener("click", registerUser);

@@ -1,3 +1,5 @@
+// password peek removed
+
 async function login() {
 
     const email = document.getElementById("email").value;
