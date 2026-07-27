@@ -5,13 +5,17 @@ import com.example.ResumeAnalyxer.DTOs.LoginResponse;
 import com.example.ResumeAnalyxer.DTOs.RegisterRequest;
 import com.example.ResumeAnalyxer.Model.User;
 import com.example.ResumeAnalyxer.Service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-
+@Tag(name = "User Management", description = "APIs for user registration and authentication")
 public class UserController {
     @Autowired
     UserService userService;
@@ -43,6 +47,14 @@ public class UserController {
     }
 
     //User REgister
+    @Operation(
+            summary = "Register User",
+            description = "Creates a new user account."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "User registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request")
+    })
     @PostMapping("user/register")
     public User userRegister(@RequestBody RegisterRequest registerRequest){
 
@@ -50,6 +62,15 @@ public class UserController {
     }
 
     //User login
+    @Operation(
+            summary = "Login User",
+            description = "Authenticates the user and returns a JWT token."
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Login successful"),
+            @ApiResponse(responseCode = "401", description = "Invalid password"),
+            @ApiResponse(responseCode = "404", description = "User not found")
+    })
     @PostMapping("user/login")
     public LoginResponse login(@RequestBody LoginRequest loginRequest){
         return userService.login(loginRequest);

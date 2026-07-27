@@ -2,6 +2,7 @@ package com.example.ResumeAnalyxer.Controller;
 
 import com.example.ResumeAnalyxer.Model.JobDescription;
 import com.example.ResumeAnalyxer.Service.JobDescriptionService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jd")
+@Tag(name = "job Description",description = "API for job Description")
 public class JobDescriptionController {
     @Autowired
     private JobDescriptionService jobDescriptionService;
