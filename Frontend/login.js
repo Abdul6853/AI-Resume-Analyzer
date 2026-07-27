@@ -49,11 +49,11 @@ async function login() {
 
     console.log(error.response.data);
 
-    alert(JSON.stringify(error.response.data));
+    
 
     message.style.color = "red";
 
-    message.innerText = JSON.stringify(error.response.data);
+   message.innerText = error.response.data.message;
     }
 
 }

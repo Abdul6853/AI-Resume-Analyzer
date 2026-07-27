@@ -52,7 +52,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        System.out.println("Authenticated User: " + email);
+       
 
         filterChain.doFilter(request, response);
     }
