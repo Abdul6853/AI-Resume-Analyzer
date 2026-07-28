@@ -1,5 +1,5 @@
 // password peek removed
-
+const API_URL = "https://ample-patience-production-077f.up.railway.app";
 const registerBtn = document.getElementById("registerBtn");
 
 registerBtn.addEventListener("click", registerUser);

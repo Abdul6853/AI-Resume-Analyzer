@@ -1,3 +1,5 @@
+const API_URL = "https://ample-patience-production-077f.up.railway.app";
+
 const user = JSON.parse(localStorage.getItem("user"));
 
 if (!user) {
