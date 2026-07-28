@@ -41,7 +41,7 @@ async function analyzeResume() {
 
         // Upload Resume
         const response = await axios.post(
-            "http://localhost:8080/resume/user/" + user.userId + "/upload",
+            `${API_URL}/resume/user/${user.userId}/upload`,
             formData,
             {
                 headers: {
