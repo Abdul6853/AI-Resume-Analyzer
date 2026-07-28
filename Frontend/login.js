@@ -21,10 +21,12 @@ async function login() {
 
     try {
 
-        const response = await axios.post(
-            "http://localhost:8080/user/login",
-            loginRequest
-        );
+        const API_URL = "https://ample-patience-production-077f.up.railway.app";
+
+const response = await axios.post(
+    `${API_URL}/user/login`,
+    loginRequest
+);
 
         // Save JWT
         localStorage.setItem("token", response.data.token); // or response.data.token if you rename it

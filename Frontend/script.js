@@ -64,7 +64,7 @@ async function analyzeResume() {
         };
 
         const jdResponse = await axios.post(
-            "http://localhost:8080/jd/add",
+            `${API_URL}/jd/add`,
             jobDescription,
             {
                 headers: {
@@ -79,7 +79,7 @@ async function analyzeResume() {
 
         // Analyze Resume
         const analysisResponse = await axios.post(
-            `http://localhost:8080/analysis/${resumeId}/${jdId}`,
+            `${API_URL}/analysis/${resumeId}/${jdId}`,
             {},
             {
                 headers: {

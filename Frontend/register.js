@@ -30,7 +30,7 @@ async function registerUser() {
     try {
 
         const response = await axios.post(
-            "http://localhost:8080/user/register",
+            `${API_URL}/user/register`,
             user
         );
 
