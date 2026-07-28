@@ -17,7 +17,8 @@ public class CorsConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedOrigins(List.of(
-                "https://spiffy-daffodil-cb44d9.netlify.app"
+                "https://spiffy-daffodil-cb44d9.netlify.app",
+                "https://abdul-resume-analyzer.netlify.app"
         ));
 
         configuration.setAllowedMethods(List.of(
