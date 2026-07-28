@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -57,7 +58,10 @@ public class ResumeController {
         return resumeService.deleteResumebyId(resumeId);
     }
     //Upload Resume
-    @PostMapping("resume/user/{userId}/upload")
+    @PostMapping(
+            value = "resume/user/{userId}/upload",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public Resume uploadResume(@PathVariable int userId,
                                @RequestParam("file") MultipartFile file) throws IOException {
         return resumeService.uploadResume(userId,file);
